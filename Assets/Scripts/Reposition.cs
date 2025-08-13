@@ -2,8 +2,14 @@ using UnityEngine;
 
 public class Reposition : MonoBehaviour
 {
+    Collider2D coll;
 
-    private const int tileGap = 40; // Tile¿« ¿Ãµø ∞£∞›
+    private const int tileGap = 40; // TileÏùò Ïù¥Îèô Í∞ÑÍ≤©
+
+    private void Awake()
+    {
+        coll = GetComponent<Collider2D>();
+    }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
@@ -12,21 +18,21 @@ public class Reposition : MonoBehaviour
         Vector3 playerPos = GameManager.Instance.player.transform.position;
         Vector3 myPos = transform.position;
 
-        float diffX = Mathf.Abs(playerPos.x - myPos.x); // X¿« ∞£∞›
-        float diffY = Mathf.Abs(playerPos.y - myPos.y); // Y¿« ∞£∞›
+        float diffX = Mathf.Abs(playerPos.x - myPos.x); // XÏùò Í∞ÑÍ≤©
+        float diffY = Mathf.Abs(playerPos.y - myPos.y); // YÏùò Í∞ÑÍ≤©
 
         Vector3 playerDir = GameManager.Instance.player.InputVec;
-        int dirX = playerDir.x < 0 ? -1 : 1; // ¿Ãµø πÊ«‚
+        int dirX = playerDir.x < 0 ? -1 : 1; // Ïù¥Îèô Î∞©Ìñ•
         int dirY = playerDir.y < 0 ? -1 : 1;
 
         switch(transform.tag)
         {
             case "Ground":
-                if(diffX > diffY) // X¿« ∞£∞›¿Ã ¥ı ≈¨ ∞ÊøÏ
+                if(diffX > diffY) // XÏùò Í∞ÑÍ≤©Ïù¥ Îçî ÌÅ¥ Í≤ΩÏö∞
                 {
                     transform.Translate(Vector3.right * dirX * tileGap);
                 }
-                else if(diffX < diffY) // Y ∞£∞›¿Ã ¥ı ≈¨ ∞ÊøÏ
+                else if(diffX < diffY) // Y Í∞ÑÍ≤©Ïù¥ Îçî ÌÅ¥ Í≤ΩÏö∞
                 {
                     transform.Translate(Vector3.up * dirY * tileGap);
                 }
@@ -36,6 +42,11 @@ public class Reposition : MonoBehaviour
                 }
                 break;
             case "Enemy":
+                if(coll.enabled)
+                {
+                    transform.Translate(playerDir * tileGap / 2 + 
+                        new Vector3(Random.Range(-3, 3f), Random.Range(-3, 3f), 0));
+                }
                 break;
         }
     }

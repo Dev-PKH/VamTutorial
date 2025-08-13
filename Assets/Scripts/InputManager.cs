@@ -5,18 +5,18 @@ public class InputManager : MonoBehaviour
 {
     public static InputManager Instance;
 
-    private PlayerInputActions playerInputActions; // Input Action AssetÀ¸·Î »ı¼ºÇÑ Å¬·¡½º
+    private PlayerInputActions playerInputActions; // Input Action Assetìœ¼ë¡œ ìƒì„±í•œ í´ë˜ìŠ¤
 
     private void Awake()
     {
         if(Instance == null) Instance = this;
 
-        playerInputActions = new PlayerInputActions(); // ÀÔ·Â Å¬·¡½º »ı¼º
-        playerInputActions.Player.Enable(); // ÀÔ·Â Å¬·¡½º È°¼ºÈ­
+        playerInputActions = new PlayerInputActions(); // ì…ë ¥ í´ë˜ìŠ¤ ìƒì„±
+        playerInputActions.Player.Enable(); // ì…ë ¥ í´ë˜ìŠ¤ í™œì„±í™”
     }
 
     /// <summary>
-    /// ¿òÁ÷ÀÓ¿¡ ´ëÇÑ ¹æÇâÀ» Á¤±ÔÈ­ÇÏ¿© °¡Á®¿À´Â ÇÔ¼ö
+    /// ì›€ì§ì„ì— ëŒ€í•œ ë°©í–¥ì„ ì •ê·œí™”í•˜ì—¬ ê°€ì ¸ì˜¤ëŠ” í•¨ìˆ˜
     /// </summary>
     /// <returns></returns>
     public Vector2 GetMovementNormalized()

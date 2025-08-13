@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
 
     public Vector2 InputVec { get; private set; }
 
-    private float speed = 5f;
+    public float speed = 3f;
 
     private void Awake()
     {
