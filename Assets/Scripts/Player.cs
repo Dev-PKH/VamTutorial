@@ -6,7 +6,7 @@ public class Player : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Animator animator;
 
-    private Vector2 inputVec;
+    public Vector2 InputVec { get; private set; }
 
     private float speed = 5f;
 
@@ -19,21 +19,21 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.MovePosition(rb.position + inputVec * speed * Time.fixedDeltaTime);
+        rb.MovePosition(rb.position + InputVec * speed * Time.fixedDeltaTime);
     }
 
     private void Update()
     {
-        inputVec = InputManager.Instance.GetMovementNormalized();
+        InputVec = InputManager.Instance.GetMovementNormalized();
     }
 
     private void LateUpdate()
     {
-        animator.SetFloat("Speed", inputVec.magnitude);
+        animator.SetFloat("Speed", InputVec.magnitude);
 
-        if (inputVec.x != 0)
+        if (InputVec.x != 0)
         {
-            spriteRenderer.flipX = inputVec.x < 0;
+            spriteRenderer.flipX = InputVec.x < 0;
         }
     }
 }
