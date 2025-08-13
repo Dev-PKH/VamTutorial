@@ -4,9 +4,13 @@ public class Enemy : MonoBehaviour
 {
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
+    private Animator animator;
 
     public float speed;
-    public Rigidbody2D target; 
+    public float health;
+    public float maxHealth;
+    public Rigidbody2D target;
+    public RuntimeAnimatorController[] animatorController; // 런타임에 실행될 애니메이션 컨트롤러
 
     private bool isLive = true;
 
@@ -14,6 +18,13 @@ public class Enemy : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
+    }
+
+    private void OnEnable()
+    {
+        isLive = true;
+        health = maxHealth;
     }
 
     private void Start()
@@ -38,5 +49,13 @@ public class Enemy : MonoBehaviour
         if (!isLive) return;
 
         spriteRenderer.flipX = target.position.x < rb.position.x;
+    }
+
+    public void Init(SpawnData data)
+    {
+        animator.runtimeAnimatorController = animatorController[data.spriteType];
+        speed = data.speed;
+        maxHealth = data.health;
+        health = maxHealth;
     }
 }
