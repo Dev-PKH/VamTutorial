@@ -16,6 +16,11 @@ public class Enemy : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
+    private void Start()
+    {
+        target = GameManager.Instance.player.GetComponent<Rigidbody2D>();
+    }
+
     private void FixedUpdate()
     {
         if (!isLive) return;
