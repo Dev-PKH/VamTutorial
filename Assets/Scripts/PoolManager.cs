@@ -18,7 +18,7 @@ public class PoolManager : MonoBehaviour
         }
     }
 
-    public GameObject GetEnemy(int index)
+    public GameObject GetPrefab(int index)
     {
         GameObject select = null;
 
