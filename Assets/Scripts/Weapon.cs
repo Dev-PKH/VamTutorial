@@ -47,6 +47,10 @@ public class Weapon : MonoBehaviour
                 break;
         }
 
+        Hand hand = player.hands[(int)data.itemType];
+        hand.spriteRenderer.sprite = data.hand;
+        hand.gameObject.SetActive(true);
+
         player.BroadcastMessage("ApplyGear", SendMessageOptions.DontRequireReceiver);
         // player를 포함하여 자식의 ApplayerGear를 실행하는데 꼭 받을 사람이 있어야 하는건 아니게 설정
     }

@@ -6,6 +6,8 @@ public class Player : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Animator animator;
 
+    public Hand[] hands;
+
     public Scanner Scanner { get; private set; }
 
     public Vector2 InputVec { get; private set; }
@@ -18,6 +20,7 @@ public class Player : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         Scanner = GetComponent<Scanner>();
+        hands = GetComponentsInChildren<Hand>(true); // 비활성화 객체도 추가
     }
 
     private void FixedUpdate()
