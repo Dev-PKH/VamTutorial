@@ -12,14 +12,30 @@ public class Weapon : MonoBehaviour
 
     private float timer;
 
-    private void Start()
+    private void Awake()
     {
-        player = GameManager.Instance.player; // 영상에서는 Awake에서 GetParent 사용
-        Init();
+        player = GameManager.Instance.player; // 나중에 생성되는거라 ㄱㅊ
     }
 
-    public void Init()
+    public void Init(ItemData data)
     {
+        name = "Weapon" + data.itemId;
+        transform.parent = player.transform;
+        transform.localPosition = Vector3.zero;
+
+        id = data.itemId;
+        damage = data.baseDamage;
+        count = data.baseCount;
+
+        for(int i =0; i < GameManager.Instance.poolManager.Prefabs.Length; i++)
+        {
+            if(data.projectile == GameManager.Instance.poolManager.Prefabs[i])
+            {
+                prefabId = i;
+                break;
+            }
+        }
+
         switch (id)
         {
             case 0:
@@ -27,9 +43,12 @@ public class Weapon : MonoBehaviour
                 SetPlace();
                 break;
             default:
-                speed = 0.3f;
+                speed = 0.5f;
                 break;
         }
+
+        player.BroadcastMessage("ApplyGear", SendMessageOptions.DontRequireReceiver);
+        // player를 포함하여 자식의 ApplayerGear를 실행하는데 꼭 받을 사람이 있어야 하는건 아니게 설정
     }
 
     private void Update()
@@ -49,8 +68,6 @@ public class Weapon : MonoBehaviour
                 }
                 break;
         }
-
-        if(Input.GetMouseButtonDown(0)) { LevelUp(10, 1); }
     }
 
     public void LevelUp(float damage, int count)
@@ -62,6 +79,8 @@ public class Weapon : MonoBehaviour
         {
             SetPlace();
         }
+
+        player.BroadcastMessage("ApplyGear", SendMessageOptions.DontRequireReceiver);
     }
 
     private void SetPlace()
