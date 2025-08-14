@@ -16,6 +16,8 @@ public class Spawner : MonoBehaviour
 
     private void Update()
     {
+        if (!GameManager.Instance.isLive) return;
+
         spawnTimer += Time.deltaTime;
         enemyLevel = Mathf.FloorToInt(GameManager.Instance.gameTimer / 10f); // 나머지 버림
         enemyLevel = Mathf.Min(enemyLevel, spawnData.Length - 1);

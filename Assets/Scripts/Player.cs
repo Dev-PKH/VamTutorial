@@ -30,11 +30,15 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        if (!GameManager.Instance.isLive) return;
+
         InputVec = InputManager.Instance.GetMovementNormalized();
     }
 
     private void LateUpdate()
     {
+        if (!GameManager.Instance.isLive) return;
+
         animator.SetFloat("Speed", InputVec.magnitude);
 
         if (InputVec.x != 0)

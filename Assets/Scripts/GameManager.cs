@@ -7,8 +7,10 @@ public class GameManager : MonoBehaviour
     [Header("# Game Object")]
     public Player player;
     public PoolManager poolManager;
+    public LevelUp uiLevelUp;
 
     [Header("# Game Control")]
+    public bool isLive { get; private set; } = true;
     public float gameTimer {  get; private set; }
     public float maxGameTime { get; private set; } = 2 * 10f;
 
@@ -28,10 +30,14 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         health = maxHealth;
+
+        uiLevelUp.Select(0);
     }
 
     private void Update()
     {
+        if (!isLive) return;
+
         gameTimer += Time.deltaTime;
 
         if(gameTimer > maxGameTime)
@@ -44,10 +50,23 @@ public class GameManager : MonoBehaviour
     {
         exp++;
 
-        if(exp == nextExp[level])
+        if (exp == nextExp[Mathf.Min(level, nextExp.Length-1)])
         {
             level++;
             exp = 0;
+            uiLevelUp.Show();
         }
+    }
+
+    public void Stop()
+    {
+        isLive = false;
+        Time.timeScale = 0;
+    }
+
+    public void Resume()
+    {
+        isLive = true;
+        Time.timeScale = 1;
     }
 }

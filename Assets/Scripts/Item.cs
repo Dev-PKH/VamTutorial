@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using static ItemData;
 
 public class Item : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class Item : MonoBehaviour
 
     private Image icon;
     private Text textLevel;
+    private Text textName;
+    private Text textDesc;
 
     public Gear gear;
 
@@ -19,11 +22,31 @@ public class Item : MonoBehaviour
 
         Text[] texts = GetComponentsInChildren<Text>();
         textLevel = texts[0];
+        textName = texts[1];
+        textDesc = texts[2];
+
+        textName.text = data.itemName;
     }
 
-    private void LateUpdate()
+    private void OnEnable()
     {
         textLevel.text = "Lv." + (level + 1);
+
+        switch (data.itemType)
+        {
+            case ItemData.ItemType.Melee:
+            case ItemData.ItemType.Range:
+                textDesc.text = string.Format(data.itemDesc, data.damages[level] * 100, data.counts[level]);
+                break;
+            case ItemData.ItemType.Glove:
+            case ItemData.ItemType.Shoe:
+                textDesc.text = string.Format(data.itemDesc, data.damages[level] * 100);
+                break;
+            default:
+                textDesc.text = string.Format(data.itemDesc);
+                break;
+        }
+        
     }
 
     public void OnClick()
