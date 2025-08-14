@@ -130,5 +130,7 @@ public class Weapon : MonoBehaviour
         bullet.position = transform.position;
         bullet.rotation = Quaternion.FromToRotation(Vector3.up, dir); // 위쪽 방향을 기준으로 dir 방향을 볼 수 있게끔 회전을 적용
         bullet.GetComponent<Bullet>().Init(damage, count, dir);
+
+        AudioManager.Instance.PlaySfx(AudioManager.Sfx.Range);
     }
 }

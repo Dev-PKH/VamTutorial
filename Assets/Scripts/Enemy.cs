@@ -80,12 +80,16 @@ public class Enemy : MonoBehaviour
         if(health > 0)
         {
             animator.SetTrigger("Hit");
+            AudioManager.Instance.PlaySfx(AudioManager.Sfx.Hit);
         }
         else
         {
             SetActiveState(false);
             GameManager.Instance.kill++;
             GameManager.Instance.GetExp();
+
+            if(GameManager.Instance.isLive) // GameClear 때 전부 죽으면 테러 당할 수 있으니 방지
+                AudioManager.Instance.PlaySfx(AudioManager.Sfx.Dead);
         }
     }
 
