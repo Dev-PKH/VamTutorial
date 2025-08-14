@@ -4,6 +4,7 @@ public class Spawner : MonoBehaviour
 {
     public Transform[] spawnPoint;
     public SpawnData[] spawnData;
+    public float levelTime;
 
     private float spawnTimer;
 
@@ -12,6 +13,7 @@ public class Spawner : MonoBehaviour
     private void Awake()
     {
         spawnPoint = GetComponentsInChildren<Transform>(); // 자기 자신도 포함하여 가져옴
+        levelTime = GameManager.Instance.maxGameTime / spawnData.Length;
     }
 
     private void Update()
@@ -19,7 +21,7 @@ public class Spawner : MonoBehaviour
         if (!GameManager.Instance.isLive) return;
 
         spawnTimer += Time.deltaTime;
-        enemyLevel = Mathf.FloorToInt(GameManager.Instance.gameTimer / 10f); // 나머지 버림
+        enemyLevel = Mathf.FloorToInt(GameManager.Instance.gameTimer / levelTime); // 나머지 버림
         enemyLevel = Mathf.Min(enemyLevel, spawnData.Length - 1);
 
         if (spawnTimer > spawnData[enemyLevel].spawnTime) // 이건 나중에 로직 완성후 변경

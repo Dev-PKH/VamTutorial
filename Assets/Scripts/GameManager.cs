@@ -12,11 +12,12 @@ public class GameManager : MonoBehaviour
     public LevelUp uiLevelUp;
     public Result uiResult;
     public GameObject enemyCleaner;
+    public Transform uiJoy;
 
     [Header("# Game Control")]
     public bool isLive { get; private set; }
     public float gameTimer {  get; private set; }
-    public float maxGameTime { get; private set; } = 2 * 10f;
+    public float maxGameTime { get; private set; } = 5 * 60f;
 
     [Header("# Player Info")]
     public int playerId;
@@ -30,6 +31,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         if(Instance == null) Instance = this;
+        Application.targetFrameRate = 60;
     }
 
     public void GameStart(int id)
@@ -92,6 +94,11 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 
+    public void GameQuit()
+    {
+        Application.Quit();
+    }
+
     private void Update()
     {
         if (!isLive) return;
@@ -123,11 +130,14 @@ public class GameManager : MonoBehaviour
     {
         isLive = false;
         Time.timeScale = 0;
+        uiJoy.localScale = Vector3.zero;
     }
 
     public void Resume()
     {
         isLive = true;
         Time.timeScale = 1;
+
+        uiJoy.localScale = Vector3.one;
     }
 }
