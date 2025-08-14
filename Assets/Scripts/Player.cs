@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     private Animator animator;
 
     public Hand[] hands;
+    public RuntimeAnimatorController[] animatorController;
 
     public Scanner Scanner { get; private set; }
 
@@ -21,6 +22,12 @@ public class Player : MonoBehaviour
         animator = GetComponent<Animator>();
         Scanner = GetComponent<Scanner>();
         hands = GetComponentsInChildren<Hand>(true); // 비활성화 객체도 추가
+    }
+
+    private void OnEnable()
+    {
+        speed *= Character.Speed;
+        animator.runtimeAnimatorController = animatorController[GameManager.Instance.playerId];
     }
 
     private void FixedUpdate()
