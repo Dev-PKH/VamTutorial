@@ -24,4 +24,9 @@ public class InputManager : MonoBehaviour
         Vector2 moveVec = playerInputActions.Player.Move.ReadValue<Vector2>().normalized;
         return moveVec;
     }
+
+    private void OnDestroy()
+    {
+        playerInputActions.Dispose();
+    }
 }
