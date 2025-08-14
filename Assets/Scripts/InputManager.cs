@@ -5,7 +5,7 @@ public class InputManager : MonoBehaviour
 {
     public static InputManager Instance;
 
-    private PlayerInputActions playerInputActions; // Input Action Asset으로 생성한 클래스
+    public PlayerInputActions playerInputActions { get; private set; } // Input Action Asset으로 생성한 클래스
 
     private void Awake()
     {
@@ -23,10 +23,5 @@ public class InputManager : MonoBehaviour
     {
         Vector2 moveVec = playerInputActions.Player.Move.ReadValue<Vector2>().normalized;
         return moveVec;
-    }
-
-    private void OnDestroy()
-    {
-        playerInputActions.Dispose();
     }
 }

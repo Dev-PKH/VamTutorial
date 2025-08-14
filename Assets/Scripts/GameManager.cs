@@ -77,6 +77,8 @@ public class GameManager : MonoBehaviour
 
     public void GameRetry()
     {
+        InputManager.Instance.playerInputActions.Dispose();
+
         SceneManager.LoadScene(0);
     }
 
